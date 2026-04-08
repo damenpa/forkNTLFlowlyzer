@@ -3,6 +3,7 @@
 from datetime import datetime
 from .features import *
 import warnings
+from classifier import get_attack
 
 class FeatureExtractor(object):
     def __init__(self, floating_point_unit: str):

@@ -1,7 +1,6 @@
 {
-    "pcap_file_address": "/home/damenpa/workspace/ciberseguridad/pcap_pruebas/PCAP-03-11/SAT-03-11-2018_0",
+    "pcap_file_address": "/home/damenpa/workspace/ciberseguridad/pcap_pruebas/PCAP-03-11/SAT-03-11-2018_0144",
     "output_file_address": "/home/damenpa/workspace/ciberseguridad/outputs/outputstest.csv",
-    "label": "Benign",
     "number_of_threads": 4,
     "feature_extractor_min_flows": 2500,
     "writer_min_rows": 1000,
