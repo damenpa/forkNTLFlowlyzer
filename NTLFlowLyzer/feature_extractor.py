@@ -3,7 +3,7 @@
 from datetime import datetime
 from .features import *
 import warnings
-from classifier import get_attack
+from attack_type import get_attack
 
 class FeatureExtractor(object):
     def __init__(self, floating_point_unit: str):
@@ -399,7 +399,7 @@ class FeatureExtractor(object):
                         print(110*"=")
                         features_of_flow[feature.name] = None
                         continue
-                features_of_flow["label"] = label
+                features_of_flow["label"] = get_attack(float(flow.get_timestamp()))
                 self.__extracted_data.append(features_of_flow.copy())
                 # print(len(features_of_flow))
             with data_lock:
