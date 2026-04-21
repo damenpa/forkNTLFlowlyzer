@@ -5,7 +5,6 @@ import socket
 import datetime
 from datetime import datetime
 
-
 class Packet():
     def __init__(self, src_ip="", src_port=0, dst_ip="", dst_port=0, protocol=None, flags=0,
             timestamp=0, forward=True, length=0, payloadbytes=0, header_size=0,
@@ -16,7 +15,7 @@ class Packet():
         self.dst_port = dst_port
         self.protocol = protocol
         self.__tcp_flags = flags
-        self.timestamp = timestamp
+        self.timestamp = timestamp      
         self.forward = forward
         self.length = length
         self.payloadbytes = payloadbytes
@@ -83,7 +82,7 @@ class Packet():
     
     def get_timestamp(self):
         return self.timestamp
-    
+
     def get_length(self):
         return self.length
 
