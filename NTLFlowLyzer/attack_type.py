@@ -26,6 +26,17 @@ second_day = {
     "SYN": ("2018-03-11 11:28", "2018-03-11 17:35"),
 }
 
+victim_ips = {
+    "192.168.50.1",
+    "192.168.50.4",
+    "205.174.165.81",
+    "192.168.50.8",
+    "192.168.50.5",
+    "192.168.50.6",
+    "192.168.50.7",
+    "192.168.50.9"
+}
+
 def convert_to_float(day_dict):
     converted = {}
     for attack, time_range in day_dict.items():
@@ -48,8 +59,11 @@ second_day_float = convert_to_float(second_day)
 first_day_attacks = create_sorted_attack_list(first_day_float)
 second_day_attacks = create_sorted_attack_list(second_day_float)
 
-def get_attack(timestamp):
-    # Get the date from timestamp to determine which day
+def get_attack(timestamp,src_ip):
+
+    if src_ip in victim_ips:
+        return "Benign"
+
     dt = datetime.fromtimestamp(timestamp)
     date_str = dt.strftime("%Y-%m-%d")
     
@@ -59,32 +73,15 @@ def get_attack(timestamp):
     elif date_str == "2018-03-11":
         attacks = second_day_attacks
     else:
-        return "Benign-noDayMatch" 
+        return "Benign" 
     
-    # Binary search using bisect
     start_times = [attack[0] for attack in attacks]
     idx = bisect.bisect_right(start_times, timestamp) - 1
     
     if idx >= 0:
         start_time, end_time, attack_name = attacks[idx]
         if start_time <= timestamp <= end_time:
-            return attack_name
+            
+            return attack_name 
     
-    return "Benign-noAttackMatch"  
-
-if __name__ == "__main__":
-    # Example usage
-    test_timestamp = datetime.strptime("2018-01-12 10:40", "%Y-%m-%d %H:%M").timestamp()
-    print(get_attack(test_timestamp))  # Should return "NTP"
-    
-    test_timestamp = datetime.strptime("2018-01-12 11:00", "%Y-%m-%d %H:%M").timestamp()
-    print(get_attack(test_timestamp))  # Should return "DNS"
-    
-    test_timestamp = datetime.strptime("2018-03-11 10:25", "%Y-%m-%d %H:%M").timestamp()
-    print(get_attack(test_timestamp))  # Should return "LDAP"
-    
-    test_timestamp = datetime.strptime("2018-03-11 12:00", "%Y-%m-%d %H:%M").timestamp()
-    print(get_attack(test_timestamp))  # Should return "SYN"
-    
-    test_timestamp = datetime.strptime("2018-01-13 10:00", "%Y-%m-%d %H:%M").timestamp()
-    print(get_attack(test_timestamp))  # Should return "Benign-noDayMatch"
+    return "Benign"  

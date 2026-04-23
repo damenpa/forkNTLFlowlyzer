@@ -399,7 +399,7 @@ class FeatureExtractor(object):
                         print(110*"=")
                         features_of_flow[feature.name] = None
                         continue
-                features_of_flow["label"] = get_attack(float(flow.get_timestamp()))
+                features_of_flow["label"] = get_attack(float(flow.get_timestamp()),flow.get_src_ip())
                 self.__extracted_data.append(features_of_flow.copy())
                 # print(len(features_of_flow))
             with data_lock:
